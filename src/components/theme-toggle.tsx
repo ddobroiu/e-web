@@ -5,14 +5,10 @@ import { useTheme } from "next-themes";
 import { Moon, Sun } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 
-export default function ThemeToggle() {
+export default function ThemeToggle() { // <--- Asigură-te că scrie "export default" aici
   const { theme, setTheme } = useTheme();
-
-  // O verificare suplimentară: asigură-te că 'theme' nu este 'undefined'
-  // Acest lucru se poate întâmpla dacă provider-ul nu este configurat corect
-  if (!theme) {
-    return null; // Sau un placeholder
-  }
+  
+  if (!theme) return null;
 
   return (
     <button

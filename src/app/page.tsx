@@ -17,11 +17,11 @@ import {
   Search,
 } from "lucide-react";
 
+// Importul trebuie să fie FĂRĂ ACOLADE
 import ThemeToggle from "@/components/theme-toggle";
 
 const WHATSAPP_URL = "https://wa.me/40750473111";
 
-// Component reutilizabil pentru secțiuni animate
 const AnimatedSection = ({ children, id, className = "" }: { children: React.ReactNode, id?: string, className?: string }) => {
   const sectionVariants = {
     hidden: { opacity: 0, y: 50 },
@@ -66,22 +66,18 @@ export default function Home() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus({ loading: true, success: false, error: false, message: '' });
-
     try {
       const response = await fetch('/api/send-form', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
-
       const result = await response.json();
-
       if (!response.ok || !result.success) {
         throw new Error(result.message || 'A apărut o eroare.');
       }
-
       setStatus({ loading: false, success: true, error: false, message: result.message });
-      setFormData({ name: '', email: '', subject: '', message: '' }); // Golește formularul
+      setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (error: any) {
       setStatus({ loading: false, success: false, error: true, message: error.message });
     }
@@ -98,7 +94,6 @@ export default function Home() {
 
   return (
     <main className="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">
-      {/* NAVBAR */}
       <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/70 backdrop-blur-xl dark:border-slate-800/80 dark:bg-slate-950/70">
         <div className="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between">
           <Link href="/" className="font-bold text-2xl tracking-tighter text-slate-900 dark:text-white">
@@ -115,7 +110,6 @@ export default function Home() {
         </div>
       </header>
 
-      {/* HERO */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0,_#e0f2fe_0%,_rgba(255,255,255,0)_25%)] dark:bg-[radial-gradient(circle_at_50%_0,_#0c4a6e_0%,_rgba(0,0,0,0)_35%)]" />
         <motion.div
@@ -141,7 +135,6 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* SERVICII */}
       <AnimatedSection id="servicii" className="bg-slate-50 dark:bg-slate-950">
         <div className="mx-auto max-w-7xl px-4">
             <motion.h2 variants={itemVariants} className="text-4xl font-bold tracking-tighter text-center">Servicii complete pentru succesul tău</motion.h2>
@@ -160,7 +153,6 @@ export default function Home() {
         </div>
       </AnimatedSection>
       
-      {/* PROCESUL NOSTRU */}
       <AnimatedSection id="proces" className="bg-white dark:bg-slate-900">
         <div className="mx-auto max-w-7xl px-4">
             <motion.h2 variants={itemVariants} className="text-4xl font-bold tracking-tighter text-center">Procesul Nostru Clar și Eficient</motion.h2>
@@ -184,7 +176,6 @@ export default function Home() {
         </div>
       </AnimatedSection>
 
-      {/* AVANTAJE */}
       <AnimatedSection id="avantaje" className="bg-slate-50 dark:bg-slate-950">
         <div className="mx-auto max-w-7xl px-4">
           <motion.h2 variants={itemVariants} className="text-4xl font-bold tracking-tighter text-center">De ce să lucrezi cu noi</motion.h2>
@@ -202,7 +193,6 @@ export default function Home() {
         </div>
       </AnimatedSection>
 
-      {/* CTA */}
       <section className="bg-gradient-to-r from-sky-500 to-indigo-600 text-white">
         <div className="mx-auto max-w-7xl px-4 py-20 flex flex-col items-center text-center">
             <h3 className="text-4xl font-bold tracking-tighter">Gata să începi un proiect?</h3>
@@ -213,7 +203,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CONTACT */}
       <AnimatedSection id="contact">
         <div className="mx-auto max-w-7xl px-4">
           <motion.h2 variants={itemVariants} className="text-4xl font-bold tracking-tighter text-center">Contact</motion.h2>
@@ -240,7 +229,6 @@ export default function Home() {
         </div>
       </AnimatedSection>
       
-      {/* FOOTER */}
       <footer className="border-t border-slate-200 dark:border-slate-800">
         <div className="mx-auto max-w-7xl px-4 py-8 text-sm text-slate-500 dark:text-slate-400 flex flex-col md:flex-row items-center justify-between gap-4">
           <div>© {new Date().getFullYear()} e-Web. Toate drepturile rezervate.</div>
