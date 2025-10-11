@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import type { Variants } from "framer-motion";
 import {
   CodeXml,
   GaugeCircle,
@@ -21,6 +22,9 @@ import ThemeToggle from "@/components/theme-toggle";
 
 const WHATSAPP_URL = "https://wa.me/40750473111";
 
+// cubic-bezier pentru easeOut-like (compatibil cu tipurile Framer Motion)
+const EASE_OUT: [number, number, number, number] = [0.16, 1, 0.3, 1];
+
 const AnimatedSection = ({
   children,
   id,
@@ -30,18 +34,20 @@ const AnimatedSection = ({
   id?: string;
   className?: string;
 }) => {
-  const sectionVariants = {
+  const sectionVariants: Variants = {
     hidden: { opacity: 0, y: 50 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
         duration: 0.6,
-        ease: "easeOut",
+        // NU mai folosim string, ci cubic-bezier:
+        ease: EASE_OUT,
         staggerChildren: 0.15,
       },
     },
   };
+
   return (
     <motion.section
       id={id}
@@ -56,9 +62,13 @@ const AnimatedSection = ({
   );
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: EASE_OUT },
+  },
 };
 
 export default function Home() {
@@ -231,7 +241,7 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* SECTIUNILE */}
+      {/* SECTIUNI */}
       <AnimatedSection id="servicii" className="bg-slate-50 dark:bg-slate-950">
         <div className="mx-auto max-w-7xl px-4">
           <motion.h2
@@ -338,7 +348,7 @@ export default function Home() {
               <motion.div
                 key={i.t}
                 variants={itemVariants}
-                className="p-6 rounded-2xl border border-transparent hover:border-sky-200 dark:hover:border-sky-900 bg-white dark:bg-slate-900 hover:shadow-2xl hover:shadow-sky-500/10 transition-all duration-300 hover:-translate-y-1"
+                className="p-6 rounded-2xl border border-transparent hover:border-sky-200 dark:hover:border-sky-900 bg-white dark:bg-slate-900 hover:shadow-2xl hover:shadow-sky-500/10 transition-all durata-300 hover:-translate-y-1"
               >
                 <div className="flex items-center gap-4">
                   {React.cloneElement(i.icon, { size: 28 })}
@@ -352,6 +362,25 @@ export default function Home() {
           </div>
         </div>
       </AnimatedSection>
+
+      {/* CTA */}
+      <section className="bg-gradient-to-r from-sky-500 to-indigo-600 text-white">
+        <div className="mx-auto max-w-7xl px-4 py-20 flex flex-col items-center text-center">
+          <h3 className="text-4xl font-bold tracking-tighter">
+            Gata să începi un proiect?
+          </h3>
+          <p className="mt-4 max-w-xl opacity-80">
+            Hai să transformăm ideea ta într-un produs digital excepțional.
+            Contactează-ne acum pentru o discuție fără obligații.
+          </p>
+          <a
+            href="#contact"
+            className="mt-8 inline-flex items-center gap-2 rounded-xl bg-white px-8 py-3 text-sky-600 font-semibold shadow-lg hover:scale-105 transition-transform"
+          >
+            Contactează-ne
+          </a>
+        </div>
+      </section>
 
       {/* CONTACT */}
       <AnimatedSection id="contact">
