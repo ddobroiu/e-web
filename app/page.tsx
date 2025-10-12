@@ -20,11 +20,14 @@ import {
 
 import ThemeToggle from "@/components/theme-toggle";
 
-// Contact constants
+// Contact constants (nu șterg nimic din conținutul original)
 const CONTACT_EMAIL = "contact@e-web.ro";
 const PHONE = "0750473111";
-// WhatsApp către numărul 0750473111 (format internațional 40 750 473 111)
-const WHATSAPP_BASE = "https://wa.me/40750473111";
+// WhatsApp număr în format internațional (Romania: 40 + 750473111)
+const WHATSAPP_NUMBER_INT = "40750473111";
+// helper pentru a genera URL WhatsApp corect
+const getWhatsAppUrl = (text: string) =>
+  `https://wa.me/${WHATSAPP_NUMBER_INT}?text=${encodeURIComponent(text)}`;
 
 // cubic-bezier pentru easeOut-like (compatibil cu tipurile Framer Motion)
 const EASE_OUT: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -121,15 +124,11 @@ export default function Home() {
         message: result.message ?? "Mesaj trimis cu succes!",
       });
 
-      // Construim mesaj WhatsApp cu datele introduse (pentru conversatie ulterioara)
-      const waText = `Salut!%0A%0ANume: ${encodeURIComponent(
-        formData.name
-      )}%0AEmail: ${encodeURIComponent(formData.email)}%0ASubiect: ${encodeURIComponent(
-        formData.subject
-      )}%0AMesaj: ${encodeURIComponent(formData.message)}%0A%0AMulțumesc!`;
-      const waUrl = `${WHATSAPP_BASE}?text=${waText}`;
+      // Construim mesaj WhatsApp cu datele introduse (folosim newline și apoi encode)
+      const waText = `Salut!\n\nNume: ${formData.name}\nEmail: ${formData.email}\nSubiect: ${formData.subject}\nMesaj: ${formData.message}\n\nMulțumesc!`;
+      const waUrl = getWhatsAppUrl(waText);
 
-      // reset form
+      // reset form (după ce construim link-ul ca să nu pierdem datele)
       setFormData({ name: "", email: "", subject: "", message: "" });
 
       // deschidem WhatsApp într-o filă nouă (utilizatorul va trimite manual în aplicație)
@@ -189,7 +188,7 @@ export default function Home() {
   const mailtoOffer = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
     "Cerere ofertă"
   )}&body=${encodeURIComponent(
-    "Bună,\n\nAș dori o ofertă pentru proiectul meu. Vă rog să mă contactați la numărul de telefon sau pe email.\n\nMulțumesc,\n"
+    `Bună,\n\nAș dori o ofertă pentru proiectul meu. Mă puteți contacta la telefon ${PHONE} sau pe email.\n\nMulțumesc,\n`
   )}`;
 
   return (
@@ -215,18 +214,22 @@ export default function Home() {
             ))}
           </nav>
           <div className="flex items-center gap-3">
+            {/* telefon click-to-call - VIZIBIL pe toate ecranele */}
             <a
               href={`tel:${PHONE}`}
-              className="hidden sm:inline-flex items-center px-3 py-2 rounded-lg text-sm bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 transition"
+              className="inline-flex items-center px-3 py-2 rounded-lg text-sm bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 transition"
             >
               <span className="font-medium">0750 47 31 11</span>
             </a>
+
+            {/* mail quick link - VIZIBIL pe toate ecranele */}
             <a
-              href={`mailto:${CONTACT_EMAIL}`}
-              className="hidden sm:inline-flex items-center px-3 py-2 rounded-lg text-sm bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 transition"
+              href={mailtoOffer}
+              className="inline-flex items-center px-3 py-2 rounded-lg text-sm bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 transition"
             >
               {CONTACT_EMAIL}
             </a>
+
             <ThemeToggle />
           </div>
         </div>
@@ -270,9 +273,9 @@ export default function Home() {
               <ArrowRight size={16} />
             </a>
             <a
-              href={`${WHATSAPP_BASE}?text=${encodeURIComponent(
+              href={getWhatsAppUrl(
                 "Salut! Aș dori mai multe informații despre serviciile voastre."
-              )}`}
+              )}
               target="_blank"
               rel="noopener noreferrer"
               className="rounded-xl border border-slate-200 dark:border-slate-800 px-6 py-3 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
