@@ -20,7 +20,11 @@ import {
 
 import ThemeToggle from "@/components/theme-toggle";
 
-const WHATSAPP_URL = "https://wa.me/40750473111";
+// Contact constants
+const CONTACT_EMAIL = "contact@e-web.ro";
+const PHONE = "0750473111";
+// WhatsApp către numărul 0750473111 (format internațional 40 750 473 111)
+const WHATSAPP_BASE = "https://wa.me/40750473111";
 
 // cubic-bezier pentru easeOut-like (compatibil cu tipurile Framer Motion)
 const EASE_OUT: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -116,7 +120,22 @@ export default function Home() {
         error: false,
         message: result.message ?? "Mesaj trimis cu succes!",
       });
+
+      // Construim mesaj WhatsApp cu datele introduse (pentru conversatie ulterioara)
+      const waText = `Salut!%0A%0ANume: ${encodeURIComponent(
+        formData.name
+      )}%0AEmail: ${encodeURIComponent(formData.email)}%0ASubiect: ${encodeURIComponent(
+        formData.subject
+      )}%0AMesaj: ${encodeURIComponent(formData.message)}%0A%0AMulțumesc!`;
+      const waUrl = `${WHATSAPP_BASE}?text=${waText}`;
+
+      // reset form
       setFormData({ name: "", email: "", subject: "", message: "" });
+
+      // deschidem WhatsApp într-o filă nouă (utilizatorul va trimite manual în aplicație)
+      if (typeof window !== "undefined") {
+        window.open(waUrl, "_blank", "noopener,noreferrer");
+      }
     } catch (err: unknown) {
       const msg =
         err instanceof Error
@@ -166,6 +185,13 @@ export default function Home() {
     },
   ];
 
+  // mailto pentru butonul "Cere o Ofertă" -> deschide clientul de email către contact@e-web.ro
+  const mailtoOffer = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
+    "Cerere ofertă"
+  )}&body=${encodeURIComponent(
+    "Bună,\n\nAș dori o ofertă pentru proiectul meu. Vă rog să mă contactați la numărul de telefon sau pe email.\n\nMulțumesc,\n"
+  )}`;
+
   return (
     <main className="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">
       {/* HEADER */}
@@ -188,7 +214,21 @@ export default function Home() {
               </a>
             ))}
           </nav>
-          <ThemeToggle />
+          <div className="flex items-center gap-3">
+            <a
+              href={`tel:${PHONE}`}
+              className="hidden sm:inline-flex items-center px-3 py-2 rounded-lg text-sm bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 transition"
+            >
+              <span className="font-medium">0750 47 31 11</span>
+            </a>
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="hidden sm:inline-flex items-center px-3 py-2 rounded-lg text-sm bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 transition"
+            >
+              {CONTACT_EMAIL}
+            </a>
+            <ThemeToggle />
+          </div>
         </div>
       </header>
 
@@ -223,14 +263,16 @@ export default function Home() {
             className="mt-8 flex flex-wrap justify-center gap-4"
           >
             <a
-              href="#contact"
+              href={mailtoOffer}
               className="inline-flex items-center gap-2.5 rounded-xl bg-sky-500 px-6 py-3 text-white font-semibold shadow-lg shadow-sky-500/20 hover:bg-sky-600 transition-all"
             >
               <span>Cere o Ofertă</span>
               <ArrowRight size={16} />
             </a>
             <a
-              href={WHATSAPP_URL}
+              href={`${WHATSAPP_BASE}?text=${encodeURIComponent(
+                "Salut! Aș dori mai multe informații despre serviciile voastre."
+              )}`}
               target="_blank"
               rel="noopener noreferrer"
               className="rounded-xl border border-slate-200 dark:border-slate-800 px-6 py-3 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
@@ -348,7 +390,7 @@ export default function Home() {
               <motion.div
                 key={i.t}
                 variants={itemVariants}
-                className="p-6 rounded-2xl border border-transparent hover:border-sky-200 dark:hover:border-sky-900 bg-white dark:bg-slate-900 hover:shadow-2xl hover:shadow-sky-500/10 transition-all durata-300 hover:-translate-y-1"
+                className="p-6 rounded-2xl border border-transparent hover:border-sky-200 dark:hover:border-sky-900 bg-white dark:bg-slate-900 hover:shadow-2xl hover:shadow-sky-500/10 transition-[box-shadow,_border] duration-300"
               >
                 <div className="flex items-center gap-4">
                   {React.cloneElement(i.icon, { size: 28 })}
@@ -435,7 +477,7 @@ export default function Home() {
                 variants={itemVariants}
                 type="submit"
                 disabled={status.loading}
-                className="w-full rounded-xl bg-slate-900 px-6 py-3 text-white font-semibold hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200 transition-colors disabled:opacity-50"
+                className="w-full rounded-xl bg-slate-900 px-6 py-3 text-white font-semibold hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {status.loading ? "Se trimite..." : "Trimite Mesajul"}
               </motion.button>
@@ -459,16 +501,16 @@ export default function Home() {
           </div>
           <div className="flex items-center gap-6">
             <a
-              href="#"
+              href={`mailto:${CONTACT_EMAIL}`}
               className="hover:text-slate-900 dark:hover:text-white transition-colors"
             >
-              Termeni
+              {CONTACT_EMAIL}
             </a>
             <a
-              href="#"
+              href={`tel:${PHONE}`}
               className="hover:text-slate-900 dark:hover:text-white transition-colors"
             >
-              Confidențialitate
+              0750 47 31 11
             </a>
           </div>
         </div>
