@@ -199,9 +199,9 @@ export default function Home() {
 
   // mailto pentru butonul "Cere o Ofertă" -> deschide clientul de email către contact@e-web.ro
   const mailtoOffer = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
-    "Cerere ofertă"
+    "Cerere ofertă - Soluții digitale personalizate"
   )}&body=${encodeURIComponent(
-    `Bună,\n\nAș dori o ofertă pentru proiectul meu. Mă puteți contacta la telefon ${PHONE} sau pe email.\n\nMulțumesc,\n`
+    `Bună ziua,\n\nSunt interesat(ă) de serviciile e-Web și aș dori o ofertă personalizată pentru:\n\n□ Aplicații web custom\n□ Site web modern\n□ Magazin online\n□ Chatbot inteligent (WhatsApp/Web)\n□ Altceva: ________________\n\nVă rog să mă contactați pentru discuții detaliate.\n\nDate de contact:\nTelefon: ${PHONE}\nEmail: \n\nMulțumesc,\n`
   )}`;
 
   return (
@@ -222,7 +222,7 @@ export default function Home() {
           </Link>
           
           <nav className="hidden md:flex items-center gap-1 text-sm font-semibold text-slate-600 dark:text-slate-300">
-            {["servicii", "proces", "avantaje", "contact"].map((link) => (
+            {["servicii", "proces", "portofoliu", "contact"].map((link) => (
               <a
                 key={link}
                 href={`#${link}`}
@@ -390,42 +390,44 @@ export default function Home() {
               {
                 icon: <Bot size={40} />,
                 color: "from-pink-500 to-rose-500",
-                t: "Chatboți Inteligenți",
+                t: "Chatboți Inteligenti",
                 d: "Asistenți virtuali pe WhatsApp și chat live integrat în site. Automatizare conversații, suport clienți 24/7 și generare leads.",
               },
             ].map((i) => (
-              <motion.div
+              <Link 
                 key={i.t}
-                variants={itemVariants}
-                className="group relative rounded-3xl border border-slate-200 dark:border-slate-800 bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 p-8 hover:shadow-2xl hover:scale-105 transition-all duration-500 overflow-hidden"
+                href={
+                  i.t === "Aplicații Web Custom" ? "/aplicatii-web" :
+                  i.t === "Site-uri Web Moderne" ? "/siteuri-web" :
+                  i.t === "Magazine Online Complete" ? "/magazine-online" :
+                  i.t === "Chatboți Inteligenti" ? "/chatboti" : "#"
+                }
+                className="block"
               >
-                {/* Gradient overlay on hover */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${i.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
-                
-                <div className="relative">
-                  <div className={`inline-flex p-4 rounded-2xl bg-gradient-to-br ${i.color} text-white shadow-lg mb-6`}>
-                    {i.icon}
+                <motion.div
+                  variants={itemVariants}
+                  className="group relative rounded-3xl border border-slate-200 dark:border-slate-800 bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 p-8 hover:shadow-2xl hover:scale-105 transition-all duration-500 overflow-hidden cursor-pointer"
+                >
+                  {/* Gradient overlay on hover */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${i.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
+                  
+                  <div className="relative">
+                    <div className={`inline-flex p-4 rounded-2xl bg-gradient-to-br ${i.color} text-white shadow-lg mb-6`}>
+                      {i.icon}
+                    </div>
+                    
+                    <h3 className="text-2xl font-bold mb-4 text-slate-900 dark:text-white">{i.t}</h3>
+                    <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
+                      {i.d}
+                    </p>
+                    
+                    <div className="mt-6 inline-flex items-center text-sm font-semibold text-sky-600 dark:text-sky-400 group-hover:gap-2 transition-all">
+                      <span>Află mai mult</span>
+                      <ArrowRight size={16} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </div>
                   </div>
-                  
-                  <h3 className="text-2xl font-bold mb-4 text-slate-900 dark:text-white">{i.t}</h3>
-                  <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
-                    {i.d}
-                  </p>
-                  
-                  <Link 
-                    href={
-                      i.t === "Aplicații Web Custom" ? "/aplicatii-web" :
-                      i.t === "Site-uri Web Moderne" ? "/siteuri-web" :
-                      i.t === "Magazine Online Complete" ? "/magazine-online" :
-                      i.t === "Chatboți Inteligenti" ? "/chatboti" : "#"
-                    }
-                    className="mt-6 inline-flex items-center text-sm font-semibold text-sky-600 dark:text-sky-400 group-hover:gap-2 transition-all"
-                  >
-                    <span>Află mai mult</span>
-                    <ArrowRight size={16} className="opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </Link>
-                </div>
-              </motion.div>
+                </motion.div>
+              </Link>
             ))}
           </div>
         </div>
@@ -707,6 +709,152 @@ export default function Home() {
         </div>
       </section>
 
+      {/* PORTOFOLIU */}
+      <AnimatedSection id="portofoliu" className="bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-indigo-950 dark:via-purple-950 dark:to-pink-950">
+        <div className="mx-auto max-w-7xl px-4">
+          <div className="text-center mb-16">
+            <motion.div
+              variants={itemVariants}
+              className="inline-flex items-center gap-2 mb-4 px-4 py-2 rounded-full bg-gradient-to-r from-indigo-100 to-purple-100 dark:from-indigo-950 dark:to-purple-950 border border-indigo-200 dark:border-indigo-800"
+            >
+              <Gem size={16} className="text-indigo-600 dark:text-indigo-400" />
+              <span className="text-sm font-semibold text-indigo-700 dark:text-indigo-300">PROIECTE REALIZATE</span>
+            </motion.div>
+            <motion.h2
+              variants={itemVariants}
+              className="text-5xl sm:text-6xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-indigo-900 to-purple-900 dark:from-indigo-200 dark:to-purple-200"
+            >
+              Portofoliu
+              <br />
+              <span className="text-pink-600 dark:text-pink-400">Premium</span>
+            </motion.h2>
+            <motion.p
+              variants={itemVariants}
+              className="mt-6 max-w-3xl mx-auto text-xl text-slate-700 dark:text-slate-300 leading-relaxed"
+            >
+              Proiecte inovatoare care demonstrează expertiza noastră în dezvoltarea soluțiilor digitale de ultimă generație
+            </motion.p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            {[
+              {
+                name: "Prynt.ro",
+                description: "Platformă completă de tipar digital cu configuratoare interactive, sistem de comenzi și asistent AI integrat",
+                url: "https://www.prynt.ro/",
+                category: "E-commerce & AI",
+                tech: ["Next.js", "AI Assistant", "E-commerce", "Configuratori"],
+                color: "from-blue-500 to-cyan-500"
+              },
+              {
+                name: "Randări3D.ro", 
+                description: "Studio AI pentru design interior și randări 3D folosind Gemini și Google Veo pentru crearea de conținut vizual",
+                url: "https://www.randari3d.ro/",
+                category: "AI & Design",
+                tech: ["AI Gemini", "Google Veo", "3D Rendering", "Design Tool"],
+                color: "from-purple-500 to-pink-500"
+              },
+              {
+                name: "MP5.ro",
+                description: "Platformă pentru comanda de muzică personalizată cu generare automată și multiple stiluri muzicale",
+                url: "https://www.mp5.ro/",
+                category: "Creative & Audio",
+                tech: ["Audio Processing", "Custom Music", "Payment System", "Creative AI"],
+                color: "from-orange-500 to-red-500"
+              },
+              {
+                name: "AI365.ro",
+                description: "Curs complet pentru crearea de video-uri virale cu AI, de la script la montaj automatizat",
+                url: "https://www.ai365.ro/",
+                category: "Education & AI",
+                tech: ["Video AI", "Educational Platform", "Course Management", "Community"],
+                color: "from-green-500 to-emerald-500"
+              },
+              {
+                name: "3DView.ai",
+                description: "Soluții avansate de vizualizare 3D și realitate augmentată pentru prezentarea produselor",
+                url: "https://3dview.ai/",
+                category: "3D & AR",
+                tech: ["3D Visualization", "AR Technology", "WebGL", "Interactive"],
+                color: "from-indigo-500 to-purple-500"
+              },
+              {
+                name: "Anuntul.net",
+                description: "Platformă de știri regionale cu 17K+ vizitatori zilnic, organizare pe regiuni și sistem de comunicare automată",
+                url: "https://anuntul.net/",
+                category: "Media & News",
+                tech: ["News Platform", "Regional Content", "SEO Optimized", "Analytics"],
+                color: "from-red-500 to-rose-500"
+              }
+            ].map((project, index) => (
+              <motion.div
+                key={project.name}
+                variants={itemVariants}
+                className="group"
+              >
+                <a 
+                  href={project.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block"
+                >
+                  <div className="relative rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden hover:shadow-2xl hover:scale-105 transition-all duration-500">
+                    {/* Project Image Placeholder */}
+                    <div className={`relative h-48 bg-gradient-to-br ${project.color} flex items-center justify-center`}>
+                      <div className="absolute inset-0 bg-black/10" />
+                      <div className="relative text-center text-white">
+                        <Globe size={48} className="mx-auto mb-2" />
+                        <div className="text-sm font-medium opacity-90">{project.category}</div>
+                      </div>
+                      {/* Live indicator */}
+                      <div className="absolute top-4 right-4 flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm">
+                        <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                        <span className="text-xs font-medium text-white">LIVE</span>
+                      </div>
+                    </div>
+                    
+                    <div className="p-6">
+                      <div className="flex items-start justify-between mb-3">
+                        <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                          {project.name}
+                        </h3>
+                        <ArrowRight size={20} className="text-slate-400 group-hover:text-indigo-500 group-hover:translate-x-1 transition-all" />
+                      </div>
+                      
+                      <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4">
+                        {project.description}
+                      </p>
+                      
+                      <div className="flex flex-wrap gap-2">
+                        {project.tech.map((tech) => (
+                          <span
+                            key={tech}
+                            className="px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-xs font-medium text-slate-700 dark:text-slate-300"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </motion.div>
+            ))}
+          </div>
+          
+          <motion.div
+            variants={itemVariants}
+            className="text-center mt-16"
+          >
+            <div className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-bold shadow-xl hover:shadow-indigo-500/30 hover:scale-105 transition-all">
+              <Sparkles size={20} />
+              <span>Vezi toate proiectele live</span>
+              <ArrowRight size={16} />
+            </div>
+          </motion.div>
+        </div>
+      </AnimatedSection>
+
       {/* CONTACT */}
       <AnimatedSection id="contact" className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900">
         <div className="mx-auto max-w-7xl px-4">
@@ -858,7 +1006,7 @@ export default function Home() {
             <div>
               <h3 className="font-bold text-white mb-4">Link-uri Rapide</h3>
               <ul className="space-y-2">
-                {["servicii", "proces", "avantaje", "contact"].map((link) => (
+                {["servicii", "proces", "portofoliu", "contact"].map((link) => (
                   <li key={link}>
                     <a
                       href={`#${link}`}
@@ -916,8 +1064,12 @@ export default function Home() {
                 © {new Date().getFullYear()} <span className="text-white font-semibold">e-Web</span>. Toate drepturile rezervate.
               </div>
               <div className="flex items-center gap-6">
-                <a href="#" className="hover:text-sky-400 transition-colors">Politică Confidențialitate</a>
-                <a href="#" className="hover:text-sky-400 transition-colors">Termeni & Condiții</a>
+                <Link href="/politica-confidentialitate" className="hover:text-sky-400 transition-colors">
+                  Politică Confidențialitate
+                </Link>
+                <Link href="/termeni-conditii" className="hover:text-sky-400 transition-colors">
+                  Termeni & Condiții
+                </Link>
               </div>
             </div>
           </div>

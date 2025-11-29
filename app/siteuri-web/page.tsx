@@ -1,3 +1,5 @@
+"use client";
+
 import type { Metadata } from "next";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -15,15 +17,15 @@ import {
   Rocket,
   Eye
 } from "lucide-react";
-
-export const metadata: Metadata = {
-  title: "Site-uri Web Moderne - Landing Pages & Site-uri Prezentare | e-Web", 
-  description: "Creăm site-uri web moderne, ultra-rapide și optimizate SEO. Landing pages, site-uri prezentare și portofolii cu design responsive și performanță maximă.",
-};
+import Header from "@/components/header";
+import Footer from "@/components/footer";
 
 export default function SiteuriWebPage() {
   return (
-    <main className="min-h-screen bg-white dark:bg-slate-900">
+    <div className="min-h-screen bg-white dark:bg-slate-900">
+      <Header />
+      
+      <main>
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-slate-50 via-indigo-50 to-purple-100 dark:from-slate-950 dark:via-indigo-950 dark:to-purple-950 py-20">
         <div className="absolute top-0 -left-4 w-96 h-96 bg-indigo-300 dark:bg-indigo-900 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-3xl opacity-30 animate-blob" />
@@ -330,8 +332,11 @@ export default function SiteuriWebPage() {
               </Link>
             </div>
           </motion.div>
-        </div>
-      </section>
-    </main>
+          </div>
+        </section>
+      </main>
+      
+      <Footer />
+    </div>
   );
 }

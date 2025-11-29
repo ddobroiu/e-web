@@ -1,26 +1,27 @@
-import type { Metadata } from "next";
+"use client";
+
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowLeft, Shield, Eye, Lock, UserCheck } from "lucide-react";
-
-export const metadata: Metadata = {
-  title: "Politica de Confidențialitate - e-Web | Protecția Datelor Personale",
-  description: "Politica de confidențialitate e-Web conform GDPR. Cum colectăm, procesăm și protejăm datele tale personale în conformitate cu legislația română și europeană.",
-};
+import Header from "@/components/header";
+import Footer from "@/components/footer";
 
 export default function PoliticaConfidentialitatePage() {
   return (
-    <main className="min-h-screen bg-white dark:bg-slate-900">
-      {/* Header */}
-      <section className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 py-16">
-        <div className="max-w-4xl mx-auto px-4">
-          <Link 
-            href="/"
-            className="inline-flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition-colors mb-8"
-          >
-            <ArrowLeft size={20} />
-            <span>Înapoi la pagina principală</span>
-          </Link>
+    <div className="min-h-screen bg-white dark:bg-slate-900">
+      <Header />
+      
+      <main>
+        {/* Hero Section */}
+        <section className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 py-16">
+          <div className="max-w-4xl mx-auto px-4">
+            <Link 
+              href="/"
+              className="inline-flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition-colors mb-8"
+            >
+              <ArrowLeft size={20} />
+              <span>Înapoi la pagina principală</span>
+            </Link>
           
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -51,8 +52,9 @@ export default function PoliticaConfidentialitatePage() {
       </section>
 
       {/* Content */}
-      <section className="py-16">
-        <div className="max-w-4xl mx-auto px-4 prose prose-slate dark:prose-invert max-w-none">
+        {/* Content */}
+        <section className="py-16">
+          <div className="max-w-4xl mx-auto px-4 prose prose-slate dark:prose-invert prose-lg">
           
           <div className="bg-slate-50 dark:bg-slate-800 p-6 rounded-2xl mb-12">
             <div className="flex items-start gap-4">
@@ -239,8 +241,11 @@ export default function PoliticaConfidentialitatePage() {
             </p>
           </div>
 
-        </div>
-      </section>
-    </main>
+          </div>
+        </section>
+      </main>
+      
+      <Footer />
+    </div>
   );
 }

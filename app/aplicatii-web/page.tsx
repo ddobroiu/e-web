@@ -1,4 +1,5 @@
-import type { Metadata } from "next";
+"use client";
+
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { 
@@ -12,18 +13,18 @@ import {
   BarChart3,
   Settings,
   Cloud,
-  Mobile,
+  Smartphone,
   Globe
 } from "lucide-react";
-
-export const metadata: Metadata = {
-  title: "Aplicații Web Custom - Dezvoltare Platforme Enterprise | e-Web",
-  description: "Creăm aplicații web personalizate cu arhitectură robustă, API-uri moderne și interfețe intuitive. Soluții enterprise adaptate perfect nevoilor tale.",
-};
+import Header from "@/components/header";
+import Footer from "@/components/footer";
 
 export default function AplicatiiWebPage() {
   return (
-    <main className="min-h-screen bg-white dark:bg-slate-900">
+    <div className="min-h-screen bg-white dark:bg-slate-900">
+      <Header />
+      
+      <main>
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-slate-50 via-sky-50 to-indigo-100 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950 py-20">
         <div className="absolute top-0 -left-4 w-96 h-96 bg-purple-300 dark:bg-purple-900 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-3xl opacity-30 animate-blob" />
@@ -133,7 +134,7 @@ export default function AplicatiiWebPage() {
                 desc: "Aplicații software-as-a-service cu arhitectură multi-tenant, billing automat și scalabilitate în cloud."
               },
               {
-                icon: <Mobile size={32} />,
+                icon: <Smartphone size={32} />,
                 title: "PWA (Progressive Web Apps)",
                 desc: "Aplicații web care funcționează ca aplicații native mobile cu suport offline și notificări push."
               },
@@ -317,8 +318,11 @@ export default function AplicatiiWebPage() {
               </Link>
             </div>
           </motion.div>
-        </div>
-      </section>
-    </main>
+          </div>
+        </section>
+      </main>
+      
+      <Footer />
+    </div>
   );
 }

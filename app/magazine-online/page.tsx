@@ -1,6 +1,9 @@
-import type { Metadata } from "next";
+"use client";
+
 import Link from "next/link";
 import { motion } from "framer-motion";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
 import { 
   ArrowLeft, 
   CheckCircle2, 
@@ -18,14 +21,12 @@ import {
   Shield
 } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "Magazine Online Complete - E-commerce Avansat | e-Web",
-  description: "Creăm magazine online performante cu gestiune stocuri, plăți online, integrare curieri și rapoarte detaliate. E-commerce complet pentru afacerea ta.",
-};
-
 export default function MagazineOnlinePage() {
   return (
-    <main className="min-h-screen bg-white dark:bg-slate-900">
+    <div className="min-h-screen bg-white dark:bg-slate-900">
+      <Header />
+      
+      <main>
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-slate-50 via-purple-50 to-pink-100 dark:from-slate-950 dark:via-purple-950 dark:to-pink-950 py-20">
         <div className="absolute top-0 -left-4 w-96 h-96 bg-purple-300 dark:bg-purple-900 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-3xl opacity-30 animate-blob" />
@@ -373,8 +374,11 @@ export default function MagazineOnlinePage() {
               </Link>
             </div>
           </motion.div>
-        </div>
-      </section>
-    </main>
+          </div>
+        </section>
+      </main>
+      
+      <Footer />
+    </div>
   );
 }

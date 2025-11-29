@@ -1,6 +1,9 @@
-import type { Metadata } from "next";
+"use client";
+
 import Link from "next/link";
 import { motion } from "framer-motion";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
 import { 
   ArrowLeft, 
   CheckCircle2, 
@@ -18,14 +21,12 @@ import {
   Headphones
 } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "Chatboți Inteligenti - WhatsApp & Live Chat | e-Web",
-  description: "Dezvoltăm chatboți inteligenti pentru WhatsApp și live chat integrat în site. Automatizare conversații, suport 24/7 și generare leads pentru afacerea ta.",
-};
-
 export default function ChatbotiPage() {
   return (
-    <main className="min-h-screen bg-white dark:bg-slate-900">
+    <div className="min-h-screen bg-white dark:bg-slate-900">
+      <Header />
+      
+      <main>
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-slate-50 via-pink-50 to-rose-100 dark:from-slate-950 dark:via-pink-950 dark:to-rose-950 py-20">
         <div className="absolute top-0 -left-4 w-96 h-96 bg-pink-300 dark:bg-pink-900 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-3xl opacity-30 animate-blob" />
@@ -433,8 +434,11 @@ export default function ChatbotiPage() {
               </Link>
             </div>
           </motion.div>
-        </div>
-      </section>
-    </main>
+          </div>
+        </section>
+      </main>
+      
+      <Footer />
+    </div>
   );
 }
