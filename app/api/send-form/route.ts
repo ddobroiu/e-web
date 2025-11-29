@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Verificare și inițializare Resend doar dacă API key-ul există
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
 interface FormData {
   name: string;
@@ -12,6 +13,14 @@ interface FormData {
 
 export async function POST(request: NextRequest) {
   try {
+    // Verificare dacă Resend este disponibil
+    if (!resend) {
+      return NextResponse.json(
+        { success: false, message: 'Serviciul de email nu este configurat.' },
+        { status: 503 }
+      );
+    }
+
     const body: FormData = await request.json();
     const { name, email, subject, message } = body;
 
